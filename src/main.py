@@ -1,5 +1,5 @@
 import datetime
-from sensordata import sensorDates
+from sensordata import sensorDates, sensorToObj
 from graphQLClient import GraphQLClient
 from graphQLQueries import addSensorDataQueryfn
 
@@ -23,14 +23,6 @@ def datesToQuery(date):
     # Build query vars
     return [sensorToObj(t, v, timestamp, aid) for t, v in types_values]
 
-
-def sensorToObj(type, value, timestamp, arduId):
-    return {
-        "type": type,
-        "value": value,
-        "timestamp": f'"{timestamp}"',
-        "arduId": f'"{arduId}"'
-    }
 
 # Get all the dates
 for dates in sensorDates():

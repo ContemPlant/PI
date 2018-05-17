@@ -14,6 +14,15 @@ def parseBytes(bytes):
         return -1
 
 
+def sensorToObj(type, value, timestamp, arduId):
+    return {
+        "type": type,
+        "value": value,
+        "timestamp": f'"{timestamp}"',
+        "arduId": f'"{arduId}"'
+    }
+
+
 # generator for xbee messages from serial port
 def messageReceive(port, baud):
     # Instantiate an XBee device object.
