@@ -1,6 +1,7 @@
 import serial
 import struct
-from digi.xbee.devices import XBeeDevice
+from digi.xbee.devices import XBeeDevice, Raw802Device
+from digi.xbee.exception import TimeoutException
 
 serialPort = '/dev/tty.usbserial-DN02MM7G'
 baudRate = 9600
@@ -25,15 +26,16 @@ def sensorToObj(type, value, timestamp, arduId):
 
 # generator for xbee messages from serial port
 def messageReceive(port, baud):
+
     # Instantiate an XBee device object.
-    device = XBeeDevice(port, baud)
+    device = Raw802Device(port, baud)
     # TODO Fix checksum error
     device.open()
 
     while True:
         # TODO Check that port is really open
-        if(not device._is_open):
-            pass
+        #if(not device.__get_serial_port()._isOpen):
+        #    pass
         message = device.read_data()
         if message is not None:
             yield message

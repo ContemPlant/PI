@@ -3,8 +3,8 @@ from sensordata import sensorDates, sensorToObj
 from graphQLClient import GraphQLClient
 from graphQLQueries import addSensorDataQueryfn
 
-# plantsDbEndpoint = 'http://167.99.240.197:8000/graphql'
-plantsDbEndpoint = 'http://localhost:8000/graphql'
+plantsDbEndpoint = 'http://167.99.240.197:8000/graphql'
+# plantsDbEndpoint = 'http://localhost:8000/graphql'
 
 client = GraphQLClient(plantsDbEndpoint)
 
@@ -15,7 +15,7 @@ def datesToQuery(date):
 
     # Hard code timestamp and ardu id for now
     timestamp = datetime.datetime.now().isoformat()
-    aid = "cjh51fk31001z07497emu90xa"
+    aid = "cjhbrl7jb00bu0762shs2yo3g"
 
     # Associate values with types
     types_values = [('TEMP', temp), ('HUM', hum), ('RAD', rad)]
