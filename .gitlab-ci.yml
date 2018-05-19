@@ -7,6 +7,8 @@ image: python:3.6
 variables:
   PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache"
 
+stages:
+  -test
 # Pip's cache doesn't store the python packages
 # https://pip.pypa.io/en/stable/reference/pip_install/#caching
 #
@@ -17,13 +19,17 @@ cache:
     - .cache/pip
     - venv/
 
-before_script:
-  - python -V               # Print out python version for debugging
-  - pip install virtualenv
-  - virtualenv venv
-  - source venv/bin/activate
-  - pip install -r deps.txt
-
-test:
+before:
+  stage: test
   script:
-  - python -m unittest
+    - python -V               # Print out python version for debugging
+    - pip install virtualenv
+    - virtualenv venv
+    - source venv/bin/activate
+    - pip install -r deps.txt
+
+all_tests:
+  stage: test
+  script:
+    - source venv/bin/activate
+    - python -m unittest
