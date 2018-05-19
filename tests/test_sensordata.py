@@ -1,9 +1,8 @@
 import unittest
 import sys
 import struct
-import utils
-sys.path.append('./src')
-from sensordata import parseBytes, sensorToObj, messageReceive
+from tests.utils import generatorTester
+from src.sensordata import parseBytes, sensorToObj, messageReceive
 
 
 class TestSensorData(unittest.TestCase):
@@ -39,8 +38,7 @@ class TestSensorData(unittest.TestCase):
 
         msgs = ['HEY', 'HO', 'HI']
         device = mockDevice(msgs)
-
-        utils.generatorTester(messageReceive(device), msgs)
+        generatorTester(messageReceive(device), msgs)
 
 
 if __name__ == '__main__':
