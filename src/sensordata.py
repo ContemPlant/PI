@@ -15,6 +15,7 @@ def parseBytes(bytes):
         return -1
 
 
+# Sensor values to object parsing
 def sensorToObj(type, value, timestamp, arduId):
     return {
         "type": type,
@@ -24,17 +25,12 @@ def sensorToObj(type, value, timestamp, arduId):
     }
 
 
-# generator for xbee messages from serial port
-def messageReceive(port, baud):
-
-    # Instantiate an XBee device object.
-    device = Raw802Device(port, baud)
-    # TODO Fix checksum error
-    device.open()
+# generator for xbee messages from given device
+def messageReceive(device):
 
     while True:
         # TODO Check that port is really open
-        #if(not device.__get_serial_port()._isOpen):
+        # if(not device.__get_serial_port()._isOpen):
         #    pass
         message = device.read_data()
         if message is not None:
@@ -43,7 +39,13 @@ def messageReceive(port, baud):
 
 # generator for parsed sensor dates
 def sensorDates():
-    for message in messageReceive(serialPort, baudRate):
+
+    # Instantiate an XBee device object.
+    device = Raw802Device(serialPort, baudRate)
+    # TODO Fix checksum error
+    device.open()
+
+    for message in messageReceive(device):
         # address = xbee_message.remote_device.get_16bit_addr()
         data = message.data
         yield parseBytes(data)
