@@ -20,8 +20,8 @@ cache:
 before_script:
   - python -V               # Print out python version for debugging
   - pip install virtualenv
-  - virtualenv venv
-  - source venv/bin/activate
+  - virtualenv .
+  - source ./bin/activate
   - pip install -r deps.txt
 
 all_tests:
