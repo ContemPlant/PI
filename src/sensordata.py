@@ -42,7 +42,6 @@ def sensorDates():
 
     # Instantiate an XBee device object.
     device = Raw802Device(serialPort, baudRate)
-    # TODO Fix checksum error
     device.open()
 
     for message in messageReceive(device):

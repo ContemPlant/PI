@@ -1,5 +1,5 @@
 import datetime
-from sensordata import sensorDates, sensorToObj
+from sensorData import sensorDates, sensorToObj
 from graphQLClient import GraphQLClient
 from graphQLQueries import addSensorDataQueryfn
 
