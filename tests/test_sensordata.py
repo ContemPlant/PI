@@ -2,7 +2,7 @@ import unittest
 import sys
 import struct
 from tests.utils import generatorTester
-from src.sensordata import parseBytes, sensorToObj, messageReceive
+from src.sensorData import parseBytes, sensorToObj, messageReceive
 
 
 class TestSensorData(unittest.TestCase):
