@@ -7,6 +7,7 @@
 #         arduId: $arduId
 #     ) { id }
 # }
+import json
 
 
 def addSensorDataQueryfn(obj):
@@ -18,3 +19,20 @@ def addSensorDataQueryfn(obj):
             arduId: {obj['arduId']}
         ) {{ id }}
     '''
+
+
+def subscribeToArduChangeQuery():
+    return json.dumps({
+        "type": "subscription_start",
+        "query": """subscription {
+        arduChange {
+            mutation
+            node {
+                arduId
+                loadedPlant {
+                    name
+                }
+            }
+        }
+    }"""
+    })
