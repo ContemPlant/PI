@@ -30,7 +30,14 @@ def subscribeToArduChangeQuery():
             node {
                 arduId
                 loadedPlant {
-                    name
+                    temperature_opt
+                    radiation_opt
+                    humidity_opt
+                    loudness_opt
+                    temperature_weight
+                    radiation_weight
+                    humidity_weight
+                    loudness_weight
                 }
             }
         }
