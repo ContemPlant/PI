@@ -11,17 +11,17 @@ client = GraphQLClient(plantsDbEndpoint)
 
 def datesToQuery(date):
     # unpack all the parameters that we receive
-    flags, pid, aid, timestamp, phealth, psize, temp, hum, rad = date
+    flags, sid, timestamp, compression, temp, hum, rad, loud = date
 
     # Hard code timestamp and ardu id for now
     timestamp = datetime.datetime.now().isoformat()
-    aid = "cjhbrl7jb00bu0762shs2yo3g"
+    #aid = "cjhbrl7jb00bu0762shs2yo3g"
 
     # Associate values with types
-    types_values = [('TEMP', temp), ('HUM', hum), ('RAD', rad)]
+    types_values = [('TEMP', temp), ('HUM', hum), ('RAD', rad), ('LOUD', loud)]
 
     # Build query vars
-    return [sensorToObj(t, v, timestamp, aid) for t, v in types_values]
+    return [sensorToObj(t, v, timestamp, sid) for t, v in types_values]
 
 
 # Get all the dates
