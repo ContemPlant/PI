@@ -1,32 +1,30 @@
-import datetime
-from sensorData import sensorDates, sensorToObj
-from graphQLClient import GraphQLClient
-from graphQLQueries import addSensorDataQueryfn
+from digi.xbee.devices import Raw802Device
+from constants import PORT, BAUD_RATE
+from sendDates import send_dates
+from subscription import subscribtion
+from threading import Thread
+import time
 
-plantsDbEndpoint = 'http://167.99.240.197:8000/graphql'
-# plantsDbEndpoint = 'http://localhost:8000/graphql'
-
-client = GraphQLClient(plantsDbEndpoint)
-
-
-def datesToQuery(date):
-    # unpack all the parameters that we receive
-    flags, sid, timestamp, compression, temp, hum, rad, loud = date
-
-    # Hard code timestamp and ardu id for now
-    timestamp = datetime.datetime.now().isoformat()
-    #aid = "cjhbrl7jb00bu0762shs2yo3g"
-
-    # Associate values with types
-    types_values = [('TEMP', temp), ('HUM', hum), ('RAD', rad), ('LOUD', loud)]
-
-    # Build query vars
-    return [sensorToObj(t, v, timestamp, sid) for t, v in types_values]
+def runInParallel(*fns, args):
+    thr = []
+    for fn in fns:
+        t = Thread(target=fn, args=args)
+        t.start()
+        print("oo")
+        thr.append(t)
 
 
-# Get all the dates
-for dates in sensorDates():
-    # Build query from dates
-    query = datesToQuery(dates)
-    # Execute
-    client.executeMultiple(addSensorDataQueryfn, query)
+def start():
+    try:
+        device = Raw802Device(PORT, BAUD_RATE)
+        device.open()
+
+        runInParallel(subscribtion, send_dates, args=(device,))
+    except:
+        print('Failed. Retrying in 3secs')
+        time.sleep(3)
+        start()
+
+
+if __name__ == '__main__':
+    start()

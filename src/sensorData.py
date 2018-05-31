@@ -1,14 +1,10 @@
 import serial
-from digi.xbee.devices import XBeeDevice, Raw802Device
 from digi.xbee.exception import TimeoutException
 from parsing import parseFromSensorBytes
 
-
-serialPort = '/dev/tty.usbserial-DN02MM7G'
-baudRate = 9600
-
-
 # Sensor values to object parsing
+
+
 def sensorToObj(type, value, timestamp, arduId):
     return {
         "type": type,
@@ -27,15 +23,12 @@ def messageReceive(device):
         #    pass
         message = device.read_data()
         if message is not None:
+            print("Got message")
             yield message
 
 
 # generator for parsed sensor dates
-def sensorDates():
-
-    # Instantiate an XBee device object.
-    device = Raw802Device(serialPort, baudRate)
-    device.open()
+def sensorDates(device):
 
     for message in messageReceive(device):
         # address = xbee_message.remote_device.get_16bit_addr()

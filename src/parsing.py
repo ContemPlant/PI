@@ -3,18 +3,13 @@ import struct
 
 # Receives bytes and parses them according to protocol
 def parseFromSensorBytes(bytes):
-    try:
-        return struct.unpack_from('=BHLBffff', bytes)
-    except struct.error:
-        return -1
+    return struct.unpack_from('=BHLBffff', bytes)
 
 
 def parseToLoadPlantBytes(plantDataTuple):
     flag, t_o, t_w, h_o, h_w, r_o, r_w, l_o, l_w = plantDataTuple
-    try:
-        return struct.pack('=Bffffffff', flag, t_o, t_w, h_o, h_w, r_o, r_w, l_o, l_w)
-    except struct.error:
-        return -1
+
+    return struct.pack('=Bffffffff', flag, t_o, t_w, h_o, h_w, r_o, r_w, l_o, l_w)
 
 
 def loadPlantObjectToTuple(loadPlantObject):
