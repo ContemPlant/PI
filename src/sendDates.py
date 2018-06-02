@@ -1,8 +1,9 @@
 import datetime
-from sensorData import sensorDates, sensorToObj
+from sensorData import sensor_dates
 from graphQLClient import GraphQLClient
-from graphQLQueries import addSensorDataQueryfn
+from graphQLQueries import add_sensor_data_queryfn
 from constants import API_ADDR_QM
+from parsing import sensor_tuple_to_object
 
 client = GraphQLClient(API_ADDR_QM)
 
@@ -20,16 +21,16 @@ def dates_to_query(date):
     types_values = [('TEMP', temp), ('HUM', hum), ('RAD', rad), ('LOUD', loud)]
 
     # Build query vars
-    return [sensorToObj(t, v, timestamp, sid) for t, v in types_values]
+    return [sensor_tuple_to_object(t, v, timestamp, sid) for t, v in types_values]
 
 
 def send_dates(device):
     print("Ready to receive sensor dates")
 
     # Get all the dates
-    for dates in sensorDates(device):
+    for dates in sensor_dates(device):
         # Build query from dates
         query = dates_to_query(dates)
         print(dates)
         # Execute
-        client.executeMultiple(addSensorDataQueryfn, query)
+        client.executeMultiple(add_sensor_data_queryfn, query)

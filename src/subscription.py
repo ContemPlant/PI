@@ -2,37 +2,39 @@ import asyncio  # for async/await
 import websockets  # websockets...
 import json  # json parsing
 from pprint import pprint  # pretty printing
-from graphQLQueries import subscribeToArduChangeQuery  # subscrube query
-from parsing import parseToLoadPlantBytes, loadPlantObjectToTuple
-from arduSend import sendData
+from graphQLQueries import subscribe_to_ardu_change_query  # subscrube query
+from parsing import parse_to_load_plant_bytes
+from arduSend import send_data
 from constants import API_ADDR_SUB
 
 
-async def onPlantLoaded():
+# Generator for subscription changes
+async def on_plant_loaded():
     protocol = "graphql-subscriptions"
 
+    # open socket
     async with websockets.connect(API_ADDR_SUB, subprotocols=[protocol]) as websocket:
-        await websocket.send(subscribeToArduChangeQuery())
+        # await sending of query
+        await websocket.send(subscribe_to_ardu_change_query())
         while True:
+            # wait for subscription update
             data = await websocket.recv()
             node = json.loads(data)['payload']['data']['arduChange']['node']
             yield node
 
 
 async def main(device):
-    async for change in onPlantLoaded():
-        arduId = 'A' + change['arduId']
+    async for change in on_plant_loaded():
+        ardu_id = 'A' + change['arduId']
 
-        print(arduId)
         plant = change['loadedPlant']
         pprint(plant)
 
-        plantTuple = loadPlantObjectToTuple(plant)
-        dem_bytes = parseToLoadPlantBytes(plantTuple)
-        sendData(arduId, dem_bytes, device)
+        dem_bytes = parse_to_load_plant_bytes(plant)
+        send_data(ardu_id, dem_bytes, device)
 
 
-def subscribtion(device):
+def subscription(device):
     print("Starting async loop")
     loop = asyncio.new_event_loop()
     # Blocking call which returns when the main() coroutine is done

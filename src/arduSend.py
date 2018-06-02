@@ -1,4 +1,4 @@
-def sendData(node_id, payload, device):
+def send_data(node_id, payload, device):
 
     # Obtain the remote XBee device from the XBee network.
     xbee_network = device.get_network()

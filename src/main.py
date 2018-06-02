@@ -1,11 +1,13 @@
 from digi.xbee.devices import Raw802Device
 from constants import PORT, BAUD_RATE
 from sendDates import send_dates
-from subscription import subscribtion
+from subscription import subscription
 from threading import Thread
 import time
 
-def runInParallel(*fns, args):
+
+# Run two functions as parallel threads
+def run_in_parallel(*fns, args):
     thr = []
     for fn in fns:
         t = Thread(target=fn, args=args)
@@ -16,10 +18,11 @@ def runInParallel(*fns, args):
 
 def start():
     try:
+        # Create and open device on serial port
         device = Raw802Device(PORT, BAUD_RATE)
         device.open()
-
-        runInParallel(subscribtion, send_dates, args=(device,))
+        # Execute
+        run_in_parallel(subscription, send_dates, args=(device,))
     except:
         print('Failed. Retrying in 3secs')
         time.sleep(3)

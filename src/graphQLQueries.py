@@ -10,7 +10,13 @@
 import json
 
 
-def addSensorDataQueryfn(obj):
+def add_sensor_data_queryfn(obj: dict) -> str:
+    """
+    Generates query to add sensor data out of object values
+
+    :param obj: sensor date object
+    :return:  graphql query to insert sensor date
+    """
     return f'''
     addSensorData(
             type: {obj['type']}
@@ -21,7 +27,13 @@ def addSensorDataQueryfn(obj):
     '''
 
 
-def subscribeToArduChangeQuery():
+#
+def subscribe_to_ardu_change_query() -> json:
+    """
+    Generates query to subscribe to changes in ardu table
+
+    :return:  subscription query
+    """
     return json.dumps({
         "type": "subscription_start",
         "query": """subscription {

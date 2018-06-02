@@ -1,22 +1,12 @@
-import serial
-from digi.xbee.exception import TimeoutException
-from parsing import parseFromSensorBytes
-
-# Sensor values to object parsing
+from parsing import parse_from_sensor_bytes
 
 
-def sensorToObj(type, value, timestamp, arduId):
-    return {
-        "type": type,
-        "value": value,
-        "timestamp": f'"{timestamp}"',
-        "arduId": f'"{arduId}"'
-    }
+def xbee_message_receive(device):
+    """
+    # generator for xbee messages from given device
 
-
-# generator for xbee messages from given device
-def messageReceive(device):
-
+    :param device: the device from which to read
+    """
     while True:
         # TODO Check that port is really open
         # if(not device.__get_serial_port()._isOpen):
@@ -27,10 +17,13 @@ def messageReceive(device):
             yield message
 
 
-# generator for parsed sensor dates
-def sensorDates(device):
+def sensor_dates(device):
+    """
+    generator for parsed sensor dates
 
-    for message in messageReceive(device):
+    :param device: the device from which to read
+    """
+    for message in xbee_message_receive(device):
         # address = xbee_message.remote_device.get_16bit_addr()
         data = message.data
-        yield parseFromSensorBytes(data)
+        yield parse_from_sensor_bytes(data)
