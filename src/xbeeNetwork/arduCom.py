@@ -1,6 +1,29 @@
 from parsing import parse_from_sensor_bytes
 
 
+def send_data(node_id, payload, device):
+    """
+    Sends payload to xbee with given node_id using given device
+
+    :param node_id: Address of receiver
+    :param payload: Data (bytes) to send
+    :param device: device to send data from
+    """
+    # Obtain the remote XBee device from the XBee xbeeNetwork.
+    xbee_network = device.get_network()
+    remote_device = xbee_network.discover_device(node_id)
+    if remote_device is None:
+        print("Could not find the remote device")
+        exit(1)
+
+    print("Sending data to %s >> %s..." %
+          (remote_device.get_16bit_addr(), payload))
+
+    device.send_data(remote_device, payload)
+
+    print("Success")
+
+
 def xbee_message_receive(device):
     """
     # generator for xbee messages from given device

@@ -1,9 +1,10 @@
-from digi.xbee.devices import Raw802Device
-from constants import PORT, BAUD_RATE
-from sendDates import send_dates
-from subscription import subscription
-from threading import Thread
 import time
+from threading import Thread
+from digi.xbee.devices import Raw802Device
+
+from constants import PORT, BAUD_RATE
+from xbeeNetwork.sendDates import send_dates
+from backendConnect.subscription import subscription
 
 
 # Run two functions as parallel threads

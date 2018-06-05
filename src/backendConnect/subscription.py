@@ -2,9 +2,9 @@ import asyncio  # for async/await
 import websockets  # websockets...
 import json  # json parsing
 from pprint import pprint  # pretty printing
-from graphQLQueries import subscribe_to_ardu_change_query  # subscrube query
+from backendConnect.graphQLQueries import subscribe_to_ardu_change_query  # subscrube query
 from parsing import parse_to_load_plant_bytes
-from arduSend import send_data
+from xbeeNetwork.arduCom import send_data
 from constants import API_ADDR_SUB
 
 

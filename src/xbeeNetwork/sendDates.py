@@ -1,7 +1,7 @@
 import datetime
-from sensorData import sensor_dates
-from graphQLClient import GraphQLClient
-from graphQLQueries import add_sensor_data_queryfn
+from xbeeNetwork.arduCom import sensor_dates
+from backendConnect.graphQLClient import GraphQLClient
+from backendConnect.graphQLQueries import add_sensor_data_queryfn
 from constants import API_ADDR_QM
 from parsing import sensor_tuple_to_object
 

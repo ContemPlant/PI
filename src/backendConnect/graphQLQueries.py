@@ -1,12 +1,3 @@
-# mutation($type: SensorType!, $value: Float!, $timestamp: DateTime!,
-# $arduId: ID!) {
-#     addSensorData(
-#         type: $type
-#         value: $value
-#         timeStamp: $timestamp
-#         arduId: $arduId
-#     ) { id }
-# }
 import json
 
 
@@ -27,7 +18,6 @@ def add_sensor_data_queryfn(obj: dict) -> str:
     '''
 
 
-#
 def subscribe_to_ardu_change_query() -> json:
     """
     Generates query to subscribe to changes in ardu table
