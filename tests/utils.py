@@ -1,4 +1,7 @@
-def generatorTester(generatorToTest, expectedValues):
+def generator_tester(generator_to_test, expected_values):
 
-    for generatorValue, expectedValue in zip(generatorToTest, expectedValues):
-        assert generatorValue == expectedValue, 'Value diff'
+    for generatorValue, expectedValue in zip(generator_to_test, expected_values):
+        if generatorValue != expectedValue:
+            return False
+
+    return True
