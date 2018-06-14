@@ -2,8 +2,7 @@ import unittest
 from tests.utils import generator_tester
 from src.xbeeNetwork.arduCom import \
     xbee_message_receive, \
-    send_data, \
-    sensor_dates
+    send_data
 
 
 class TestSensorData(unittest.TestCase):
