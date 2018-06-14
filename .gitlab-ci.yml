@@ -26,4 +26,4 @@ before_script:
 
 all_tests:
   script:
-    - python -m unittest
+    - python -m unittest discover

@@ -1,20 +1,24 @@
 import json
 
 
-def add_sensor_data_queryfn(obj: dict) -> str:
+def add_sensor_data_queryfn(temperatureValue, humidityValue, radiationValue, loudnessValue, timeStamp, arduId) -> str:
     """
-    Generates query to add sensor data out of object values
+    Generates query to add sensor dates out of object values
 
-    :param obj: sensor date object
-    :return:  graphql query to insert sensor date
+    :param obj: sensor dates object
+    :return:  graphql query to insert sensor dates
     """
-    return f'''
-    addSensorData(
-            type: {obj['type']}
-            value: {obj['value']}
-            timeStamp: {obj['timestamp']}
-            arduId: {obj['arduId']}
-        ) {{ id }}
+    return f'''mutation{{
+        addSensorDates(
+            input: {{
+              temperatureValue: {temperatureValue}
+              humidityValue: {humidityValue}
+              radiationValue: {radiationValue}
+              loudnessValue: {loudnessValue}
+              timeStamp: "{timeStamp}"
+              arduId:"{arduId}"
+        }}) {{ id }}
+    }}
     '''
 
 
@@ -28,10 +32,10 @@ def subscribe_to_ardu_change_query() -> json:
         "type": "subscription_start",
         "query": """subscription {
         arduChange {
-            mutation
             node {
                 arduId
                 loadedPlant {
+                    name
                     temperature_opt
                     radiation_opt
                     humidity_opt

@@ -16,9 +16,11 @@ async def on_plant_loaded():
     async with websockets.connect(API_ADDR_SUB, subprotocols=[protocol]) as websocket:
         # await sending of query
         await websocket.send(subscribe_to_ardu_change_query())
+        print("Making subscription")
         while True:
             # wait for subscription update
             data = await websocket.recv()
+            print(data)
             node = json.loads(data)['payload']['data']['arduChange']['node']
             yield node
 
@@ -28,7 +30,7 @@ async def main(device):
         ardu_id = 'A' + change['arduId']
 
         plant = change['loadedPlant']
-        pprint(plant)
+        print(f"Loading plant {plant['name']} on {ardu_id}")
 
         dem_bytes = parse_to_load_plant_bytes(plant)
         send_data(ardu_id, dem_bytes, device)

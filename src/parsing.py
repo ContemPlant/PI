@@ -37,22 +37,3 @@ def load_plant_object_to_tuple(load_plant_object: dict) -> tuple:
         load_plant_object['loudness_opt'],
         load_plant_object['loudness_weight'],
     )
-
-
-def sensor_tuple_to_object(sensor_type, value, time_stamp, ardu_id) -> dict:
-    """
-    # Sensor values to dict parsing
-
-    :param sensor_type: the type of this sensor
-    :param value: measured value
-    :param time_stamp: when was this value recorded
-    :param ardu_id: which ardu recorded the date
-    :return: object representation
-    """
-    return {
-        "type": sensor_type,
-        "value": value,
-        "timestamp": f'"{time_stamp}"',
-        "arduId": f'"{ardu_id}"'
-    }
-
