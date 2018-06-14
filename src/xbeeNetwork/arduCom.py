@@ -1,4 +1,4 @@
-from parsing import parse_from_sensor_bytes
+from src.parsing import parse_from_sensor_bytes
 
 
 def send_data(node_id, payload, device):
@@ -14,7 +14,7 @@ def send_data(node_id, payload, device):
     remote_device = xbee_network.discover_device(node_id)
     if remote_device is None:
         print("Could not find the remote device")
-        return 
+        return
 
     print("Sending data to %s >> %s..." %
           (remote_device.get_16bit_addr(), payload))
