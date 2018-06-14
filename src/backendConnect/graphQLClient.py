@@ -16,7 +16,6 @@ class GraphQLClient:
             inserted = queryfn(var)
             mutationQuery += f'mut{i}:{inserted}'
         mutationQuery += '}'
-        print(mutationQuery)
         return self._send(mutationQuery, None)
 
     def inject_token(self, token):
