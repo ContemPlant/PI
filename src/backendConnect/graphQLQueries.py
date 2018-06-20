@@ -8,18 +8,19 @@ def add_sensor_data_queryfn(temperatureValue, humidityValue, radiationValue, lou
     :param obj: sensor dates object
     :return:  graphql query to insert sensor dates
     """
-    return f'''mutation{{
-        addSensorDates(
-            input: {{
-              temperatureValue: {temperatureValue}
-              humidityValue: {humidityValue}
-              radiationValue: {radiationValue}
-              loudnessValue: {loudnessValue}
-              timeStamp: "{timeStamp}"
-              arduId:"{arduId}"
-        }}) {{ id }}
-    }}
-    '''
+    return f"mutation{{"\
+        f"addSensorDates("\
+            f"input: {{"\
+              f"temperatureValue: {temperatureValue}"\
+              f"humidityValue: {humidityValue}"\
+              f"radiationValue: {radiationValue}"\
+              f"loudnessValue: {loudnessValue}"\
+              f"timeStamp: "{timeStamp}""\
+              f"arduId:"{arduId}""\
+        f"}}) {{ id }}"\
+    f"}}"
+    
+
 
 
 def subscribe_to_ardu_change_query() -> json:
