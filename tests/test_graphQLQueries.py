@@ -8,25 +8,26 @@ from src.backendConnect.graphQLQueries import \
 class TestGraphQLQueries(unittest.TestCase):
 
     def test_add_sensor_data_queryfn(self):
-        expected = \
-            "mutation{{"\
-                "addSensorDates("\
-                    "input: {{"\
-                      "temperatureValue: 32.93"\
-                      "humidityValue: 1293"\
-                      "radiationValue: 1832"\
-                      "loudnessValue: 429"\
-                      'timeStamp: "123094832"'\
-                      'arduId:"1329"'\
-                "}}) {{ id }}"\
-            "}}"
-        
 
-        assert expected == add_sensor_data_queryfn(32.93, 1293, 1832, \
-                                                    429, 123094832, 1329)
+        expected = '''mutation {
+        addSensorDates(
+            input: {
+                temperatureValue: 32.93
+                humidityValue: 1293
+                radiationValue: 1832
+                loudnessValue: 429
+                timeStamp: "123094832"
+                arduId: "1329"
+            }
+        ) { id }
+    }'''
+
+        retrieved = add_sensor_data_queryfn(32.93, 1293, 1832, 429, 123094832, 1329)
+
+        assert expected == retrieved
 
     def test_subscribe_to_ardu_change_query(self):
-        #TODO
+        # TODO
         assert True
 
 
