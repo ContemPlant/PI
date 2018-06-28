@@ -1,4 +1,4 @@
-from src.parsing import parse_from_sensor_bytes
+from parsing import parse_from_sensor_bytes
 
 
 def send_data(node_id, payload, device):
