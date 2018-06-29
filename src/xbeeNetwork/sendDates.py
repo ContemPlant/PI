@@ -29,7 +29,6 @@ def send_dates(dates):
 def unload_plant(message):
     # unpack the source (ardu id)
     aid = str(message[1]).zfill(4)
-    aid = "0002"
     query = unload_plant_query(ardu_id=aid)
     client.execute(query)
 
