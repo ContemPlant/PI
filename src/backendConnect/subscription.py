@@ -28,6 +28,9 @@ async def main(device):
         ardu_id = 'A' + change['arduId']
 
         plant = change['loadedPlant']
+        if plant is None:
+            continue
+
         print(f"Loading plant {plant['name']} on {ardu_id}")
 
         dem_bytes = parse_to_load_plant_bytes(plant)

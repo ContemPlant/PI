@@ -49,3 +49,11 @@ def subscribe_to_ardu_change_query() -> json:
         }
     }"""
     })
+
+
+def unload_plant_query(ardu_id) -> str:
+    return f'''mutation{{
+        unloadPlantFromArdu(arduId: "{ardu_id}")
+        {{ arduId }}
+    }}
+    '''

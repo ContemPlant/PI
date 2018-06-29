@@ -40,7 +40,7 @@ def xbee_message_receive(device):
             yield message
 
 
-def sensor_dates(device):
+def ardu_messages(device):
     """
     generator for parsed sensor dates
 

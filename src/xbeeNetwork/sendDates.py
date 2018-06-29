@@ -1,7 +1,7 @@
 import datetime
-from xbeeNetwork.arduCom import sensor_dates
+from xbeeNetwork.arduCom import ardu_messages
 from backendConnect.graphQLClient import GraphQLClient
-from backendConnect.graphQLQueries import add_sensor_data_queryfn
+from backendConnect.graphQLQueries import add_sensor_data_queryfn, unload_plant_query
 from constants import API_ADDR_QM
 
 client = GraphQLClient(API_ADDR_QM)
@@ -15,18 +15,32 @@ def dates_to_query(date):
     timestamp = datetime.datetime.now().isoformat()
     aid = str(aid).zfill(4)
 
-
     # Build query vars
     return add_sensor_data_queryfn(temp, hum, rad, loud, timestamp, aid)
 
 
-def send_dates(device):
+def send_dates(dates):
+    # Build query from dates
+    query = dates_to_query(dates)
+    # Execute
+    client.execute(query)
+
+
+def unload_plant(message):
+    # unpack the source (ardu id)
+    aid = str(message[1]).zfill(4)
+    aid = "0002"
+    query = unload_plant_query(ardu_id=aid)
+    client.execute(query)
+
+
+def handle_messages(device):
     print("Ready to receive sensor dates")
 
     # Get all the dates
-    for dates in sensor_dates(device):
-        print(dates)
-        # Build query from dates
-        query = dates_to_query(dates)
-        # Execute
-        client.execute(query)
+    for message in ardu_messages(device):
+        print(message)
+        flag = message[0]
+
+        if flag == 1: send_dates(message)
+        if flag == 2: unload_plant(message)

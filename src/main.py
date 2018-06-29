@@ -4,7 +4,7 @@ from digi.xbee.devices import Raw802Device
 import os
 
 from constants import PORT, BAUD_RATE
-from xbeeNetwork.sendDates import send_dates
+from xbeeNetwork.sendDates import handle_messages
 from backendConnect.subscription import subscription
 
 
@@ -34,7 +34,7 @@ def start():
         device = Raw802Device(PORT, BAUD_RATE)
         device.open()
         # Execute
-        run_in_parallel(subscription, send_dates, args=(device,))
+        run_in_parallel(subscription, handle_messages, args=(device,))
 
     except Exception as e:
         print('Failed. Retrying in 3secs:', e)
