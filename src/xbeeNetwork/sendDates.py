@@ -23,14 +23,14 @@ def send_dates(dates):
     # Build query from dates
     query = dates_to_query(dates)
     # Execute
-    client.execute(query)
+    return client.execute(query)
 
 
 def unload_plant(message):
     # unpack the source (ardu id)
     aid = str(message[1]).zfill(4)
     query = unload_plant_query(ardu_id=aid)
-    client.execute(query)
+    return client.execute(query)
 
 
 def handle_messages(device):
