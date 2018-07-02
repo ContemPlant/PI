@@ -41,5 +41,7 @@ def handle_messages(device):
         print(message)
         flag = message[0]
 
-        if flag == 1: send_dates(message)
-        if flag == 2: unload_plant(message)
+        if flag == 2:
+            return unload_plant(message)
+        if flag == 3:
+            return send_dates(message)
