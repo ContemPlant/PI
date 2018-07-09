@@ -22,6 +22,24 @@ def add_sensor_data_queryfn(temperatureValue, humidityValue, radiationValue, lou
     }}'''
 
 
+def plant_state_query(plant_id):
+    return f'''
+    query {{
+      plant(where: {id: "${plant_id}"}) {{
+        plantStates {{
+          health
+          size
+          environment
+          sensorDates {{
+            radiationValue
+            loudnessValue
+            humidityValue
+            temperatureValue
+            timeStamp
+          }}
+        }}
+      }}'''
+
 def subscribe_to_ardu_change_query() -> json:
     """
     Generates query to subscribe to changes in ardu table
