@@ -13,6 +13,7 @@ def dates_to_query(date):
 
     # Hard code timestamp and ardu id for now
     timestamp = datetime.datetime.now().isoformat()
+    #timestamp = datetime.datetime.fromtimestamp(timestamp).isoformat()
     aid = str(aid).zfill(4)
 
     # Build query vars
@@ -42,6 +43,6 @@ def handle_messages(device):
         flag = message[0]
 
         if flag == 2:
-            return unload_plant(message)
+            unload_plant(message)
         if flag == 3:
-            return send_dates(message)
+            send_dates(message)
