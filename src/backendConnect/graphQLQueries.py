@@ -40,6 +40,7 @@ def plant_state_query(plant_id):
         }}
       }}'''
 
+
 def subscribe_to_ardu_change_query() -> json:
     """
     Generates query to subscribe to changes in ardu table
