@@ -18,14 +18,31 @@ source venv/bin/activate
 pip install -r deps.txt
 ```
 
-#### Usage
 Start listening
 ```
 python src/main.py
 ```
+To run the script in failsafe mode 
+```
+./start.sh
+```
+
 
 #### Testing
 To run the test suite simply run
 ```
 python -m unittest discover
 ```
+
+## Built With
+
+- [python-xbee](https://github.com/digidotcom/python-xbee)
+
+
+## License
+This project is licensed under the MIT License - see the LICENSE.md file for details
+
+
+## Acknowledgements
+
+- Used code from [Python GraphQL Client](https://github.com/prismagraphql/python-graphql-client)
