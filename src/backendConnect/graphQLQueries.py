@@ -18,27 +18,41 @@ def add_sensor_data_queryfn(temperatureValue, humidityValue, radiationValue, lou
                 timeStamp: "{timeStamp}"
                 arduId: "{arduId}"
             }}
-        ) {{ id }}
-    }}'''
+        ) {{ id }} }}'''
 
 
-def plant_state_query(plant_id):
+def plant_state_query(plant_id, first=1000, skip=0):
     return f'''
     query {{
-      plant(where: {id: "${plant_id}"}) {{
-        plantStates {{
-          health
-          size
-          environment
-          sensorDates {{
-            radiationValue
-            loudnessValue
-            humidityValue
-            temperatureValue
-            timeStamp
-          }}
+        plant(where: {{ id: "{plant_id}" }}) {{
+            plantStates(first: {first} skip: {skip}) {{
+                health
+                size
+                environment
+                sensorDates {{
+                    radiationValue
+                    loudnessValue
+                    humidityValue
+                    temperatureValue
+                    timeStamp
+                }}
+            }}
         }}
-      }}'''
+    }}
+    '''
+
+
+def plant_opt_query(plant_id):
+    return f'''
+    query {{
+        plant(where: {{ id: "{plant_id}" }}) {{
+            temperature_opt
+            radiation_opt
+            humidity_opt
+            loudness_opt
+        }}
+    }}
+    '''
 
 
 def subscribe_to_ardu_change_query() -> json:
@@ -71,8 +85,7 @@ def subscribe_to_ardu_change_query() -> json:
 
 
 def unload_plant_query(ardu_id) -> str:
-    return f'''mutation{{
+    return f'''mutation {{
         unloadPlantFromArdu(arduId: "{ardu_id}")
         {{ arduId }}
-    }}
-    '''
+    }}'''

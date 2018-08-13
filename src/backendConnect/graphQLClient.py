@@ -10,13 +10,6 @@ class GraphQLClient:
     def execute(self, query, variables=None):
         return self._send(query, variables)
 
-    def executeMultiple(self, queryfn, variables=None):
-        mutationQuery = 'mutation {'
-        for (i, var) in enumerate(variables):
-            inserted = queryfn(var)
-            mutationQuery += f'mut{i}:{inserted}'
-        mutationQuery += '}'
-        return self._send(mutationQuery, None)
 
     def inject_token(self, token):
         self.token = token
